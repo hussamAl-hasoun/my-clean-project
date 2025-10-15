@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="450" viewBox="0 0 800 450">
+  <rect width="800" height="450" fill="#0ea5e9" />
+  <text x="400" y="225" font-family="Arial" font-size="48" fill="white" text-anchor="middle" dominant-baseline="middle">
+    الحوسبة السحابية
+  </text>
+  <path d="M200 150 Q300 50 400 150 Q500 50 600 150 Q650 200 600 250 Q650 300 600 350 Q500 450 400 350 Q300 450 200 350 Q150 300 200 250 Q150 200 200 150" fill="white" fill-opacity="0.2" stroke="white" stroke-width="5" />
+</svg>

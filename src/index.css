@@ -1,68 +1,311 @@
-:root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-a {
-  font-weight: 500;
-  color: #646cff;
-  text-decoration: inherit;
-}
-a:hover {
-  color: #535bf2;
-}
-
-body {
+/* Reset default margins and ensure full width */
+html, body, #root {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
+  padding: 0;
+  width: 100%;
+  max-width: 100%;
   min-height: 100vh;
+  overflow-x: hidden;
+  box-sizing: border-box;
 }
 
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+/* RTL support for Arabic text */
+.rtl-text {
+  direction: rtl;
+  text-align: right;
 }
 
-button {
-  border-radius: 8px;
-  border: 1px solid transparent;
-  padding: 0.6em 1.2em;
-  font-size: 1em;
-  font-weight: 500;
-  font-family: inherit;
-  background-color: #1a1a1a;
-  cursor: pointer;
-  transition: border-color 0.25s;
-}
-button:hover {
-  border-color: #646cff;
-}
-button:focus,
-button:focus-visible {
-  outline: 4px auto -webkit-focus-ring-color;
+/* RTL container for better Arabic rendering */
+.rtl-container {
+  display: flex;
+  flex-direction: row-reverse;
 }
 
-@media (prefers-color-scheme: light) {
+#root {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Main content padding for fixed header */
+main, .main-content {
+  padding-top: 5rem !important;
+  min-height: calc(100vh - 5rem) !important;
+}
+
+/* Container styles */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 2rem !important;
+}
+
+/* Page specific content spacing */
+.page-content {
+  margin-top: 2rem !important;
+  margin-bottom: 2rem !important;
+}
+
+/* Content sections spacing */
+.content-section {
+  margin-bottom: 2.5rem !important;
+}
+
+/* Theme colors */
+@layer base {
   :root {
-    color: #213547;
-    background-color: #ffffff;
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 222.2 47.4% 11.2%;
+    --primary-foreground: 210 40% 98%;
+    --secondary: 210 40% 96.1%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 222.2 84% 4.9%;
+    --radius: 0.5rem;
   }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
+ 
+  .dark {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+    --primary: 210 40% 98%;
+    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 212.7 26.8% 83.9%;
   }
 }
+
+/* Base styles */
+body {
+  @apply bg-slate-50 text-slate-900 transition-colors duration-200;
+}
+
+/* Dark mode styles */
+.dark body {
+  @apply bg-slate-900 text-slate-50;
+}
+
+/* Font settings */
+* {
+  @apply font-tajawal;
+}
+
+/* Transition effects */
+.page-fade-enter {
+  opacity: 0;
+}
+
+.page-fade-enter-active {
+  opacity: 1;
+  transition: opacity 80ms ease-in-out;
+}
+
+.page-fade-exit {
+  opacity: 1;
+}
+
+.page-fade-exit-active {
+  opacity: 0;
+  transition: opacity 80ms ease-in-out;
+}
+
+/* Button hover effects */
+button:hover svg, 
+a:hover svg {
+  @apply transform scale-110 transition-all duration-100;
+}
+
+/* Navigation hover effects */
+nav a:hover svg, 
+nav button:hover svg {
+  @apply text-cloud transform rotate-3;
+}
+
+/* Remove all unwanted borders */
+*, *::before, *::after {
+  border-top: none !important;
+}
+
+nav, header {
+  border: none !important;
+  border-bottom: none !important;
+}
+
+/* Theme transition */
+*, *::before, *::after {
+  @apply transition-colors duration-200;
+}
+
+/* Card hover effects */
+.card:hover svg,
+.bg-white:hover svg,
+.bg-card:hover svg {
+  @apply text-cloud transform scale-110 transition-transform duration-100;
+}
+
+/* Page transitions */
+.page-slide-enter {
+  opacity: 0;
+  transform: translateY(10px);
+}
+
+.page-slide-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 200ms ease-out, transform 200ms ease-out;
+}
+
+.page-slide-exit {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.page-slide-exit-active {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 200ms ease-in, transform 200ms ease-in;
+}
+
+@layer components {
+  .cloud-bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230284c7' fill-opacity='0.05'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .dark .cloud-bg-pattern {
+    background-image: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%230284c7' fill-opacity='0.1'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  
+  /* Special hover effect for action buttons with icons */
+  button[aria-label]:hover svg, 
+  a[aria-label]:hover svg {
+    @apply text-cloud transition-colors duration-100;
+  }
+  
+  /* Add a subtle pulse effect to notification icons */
+  .has-notification svg {
+    @apply relative;
+  }
+  
+  .has-notification svg::after {
+    content: '';
+    @apply absolute top-0 right-0 w-2 h-2 bg-red-500 rounded-full;
+  }
+  
+  /* Interactive effect for nav icons */
+  nav svg {
+    @apply transition-all duration-100;
+  }
+}
+
+/* Keyframes for animations */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 30px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes pulseCta {
+  0% {
+    transform: scale(1);
+    /* Assuming --color-cloud-rgb is defined or use a direct color */
+    /* Example: box-shadow: 0 0 0 0 rgba(30, 144, 255, 0.4); */
+    box-shadow: 0 0 0 0 rgba(var(--cloud-rgb, 30, 144, 255), 0.5); /* Fallback if --cloud-rgb is not defined */
+  }
+  70% {
+    transform: scale(1.02);
+    box-shadow: 0 0 0 10px rgba(var(--cloud-rgb, 30, 144, 255), 0);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 0 0 0 rgba(var(--cloud-rgb, 30, 144, 255), 0);
+  }
+}
+
+/* Animation classes */
+.animate-fade-in-logo {
+  animation: fadeIn 0.7s ease-out 0.2s forwards;
+  opacity: 0; /* Start hidden */
+}
+
+.animate-fade-in-down {
+  animation: fadeInDown 0.7s ease-out 0.5s forwards;
+  opacity: 0; /* Start hidden */
+}
+
+.animate-fade-in-up {
+  animation: fadeInUp 0.7s ease-out 0.8s forwards;
+  opacity: 0; /* Start hidden */
+}
+
+.animate-fade-in-buttons {
+  animation: fadeIn 0.7s ease-out 1.2s forwards;
+  opacity: 0; /* Start hidden */
+}
+
+.animate-pulse-cta {
+  animation: pulseCta 2s infinite 1.5s ease-in-out; /* Start after other animations, added ease-in-out */
+}
+
+/* It's good practice to define your color variables in :root */
+/* Example, if your project uses HSL for Tailwind, you might have something like: */
+/* 
+:root {
+  --cloud: 207 90% 54%; 
+  --cloud-foreground: 210 40% 98%;
+  --cloud-rgb: 30, 144, 255; // Define this based on your actual cloud color
+}
+*/
