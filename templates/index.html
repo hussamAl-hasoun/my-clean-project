@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>منصة تقييم المقررات</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h1>تقييمات المقررات</h1>
+
+        <div id="reviews-list">
+            <p>جاري تحميل التقييمات...</p>
+        </div>
+
+        <hr>
+
+        <h2>أضف تقييمًا جديدًا</h2>
+        <form id="review-form">
+            <label for="studentName">اسمك:</label>
+            <input type="text" id="studentName" name="studentName" required>
+
+            <label for="courseName">اسم المقرر:</label>
+            <input type="text" id="courseName" name="courseName" required>
+
+            <label for="reviewText">تقييمك:</label>
+            <textarea id="reviewText" name="reviewText" required></textarea>
+
+            <button type="submit">إرسال التقييم</button>
+        </form>
+    </div>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
