@@ -13,6 +13,8 @@ body {
     line-height: 1.7;
     overflow-x: hidden;
     position: relative;
+    word-spacing: normal;
+    letter-spacing: 0.01em;
 }
 
 body::before {
@@ -70,11 +72,11 @@ header:hover {
 
 /* --- Main Container --- */
 .container {
-    max-width: 800px;
+    max-width: 1400px;
     margin: 2rem auto;
-    background-color: #1e293b; /* Slightly lighter container */
-    padding: 2rem;
-    border-radius: 12px;
+    padding: 2rem 3rem;
+    position: relative;
+    z-index: 1;
 }
 
 /* --- Review Cards (Improved) --- */
@@ -365,6 +367,29 @@ nav a:hover, nav a.active {
     margin-top: 3rem;
     border: 1px solid #475569;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* --- Reviews Layout Grid --- */
+#reviews-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+@media (max-width: 1024px) {
+    #reviews-list {
+        grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    #reviews-list {
+        grid-template-columns: 1fr;
+    }
 }
 
 /* --- Enhanced Animations --- */
@@ -605,9 +630,21 @@ button[type="submit"]:disabled {
 
 .about-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+}
+
+@media (min-width: 1200px) {
+    .about-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 1199px) and (min-width: 768px) {
+    .about-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .about-card {
@@ -774,9 +811,21 @@ button[type="submit"]:disabled {
 
 .contact-info {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 2rem;
     margin-top: 3rem;
+}
+
+@media (min-width: 1400px) {
+    .contact-info {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media (max-width: 1399px) and (min-width: 900px) {
+    .contact-info {
+        grid-template-columns: repeat(2, 1fr);
+    }
 }
 
 .contact-item {
