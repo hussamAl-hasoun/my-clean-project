@@ -49,8 +49,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 reviewsList.appendChild(reviewElement);
             });
-            // Update statistics after loading reviews
-            updateStatistics();
         } catch (error) {
             reviewsList.innerHTML = '<p>حدث خطأ أثناء تحميل التقييمات. الرجاء المحاولة مرة أخرى.</p>';
         }
@@ -102,46 +100,7 @@ document.addEventListener('DOMContentLoaded', () => {
     style.innerHTML = `.review-stars .fa-star.checked { color: #facc15; }`;
     document.head.appendChild(style);
     
-    // --- NEW: Update Statistics ---
-    async function updateStatistics() {
-        try {
-            const response = await fetch('/api/reviews');
-            const reviews = await response.json();
-            
-            // Update total reviews
-            document.getElementById('total-reviews').textContent = reviews.length;
-            
-            // Calculate average rating
-            if (reviews.length > 0) {
-                const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
-                const avgRating = (totalRating / reviews.length).toFixed(1);
-                document.getElementById('avg-rating').textContent = avgRating;
-            } else {
-                document.getElementById('avg-rating').textContent = '0.0';
-            }
-        } catch (error) {
-            console.error('Error updating statistics:', error);
-        }
-    }
-
-    // --- NEW: Animate numbers ---
-    function animateNumber(element, target, duration = 1000) {
-        const start = 0;
-        const increment = target / (duration / 16);
-        let current = start;
-        
-        const timer = setInterval(() => {
-            current += increment;
-            if (current >= target) {
-                current = target;
-                clearInterval(timer);
-            }
-            element.textContent = Math.floor(current);
-        }, 16);
-    }
-
     // --- Initial Load ---
     fetchCourses(); // Fetch courses when the page loads
     fetchReviews();
-    updateStatistics(); // Update statistics
 });

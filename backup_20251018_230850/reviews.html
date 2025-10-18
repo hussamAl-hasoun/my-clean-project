@@ -23,43 +23,13 @@
             </nav>
         </div>
     </header>
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <div class="hero-content">
-            <h1 class="hero-title">نظام تقييم المقررات الدراسية</h1>
-            <p class="hero-subtitle">شارك تجربتك ومساعدة زملائك في اختيار أفضل المقررات</p>
-            <div class="hero-stats">
-                <div class="stat-item">
-                    <span class="stat-number" id="total-reviews">0</span>
-                    <span class="stat-label">تقييم</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="total-courses">21</span>
-                    <span class="stat-label">مقرر</span>
-                </div>
-                <div class="stat-item">
-                    <span class="stat-number" id="avg-rating">0.0</span>
-                    <span class="stat-label">متوسط التقييم</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <main class="container">
-        <div class="section-header">
-            <h1>تقييمات المقررات</h1>
-            <p>اكتشف آراء الطلاب في المقررات المختلفة</p>
-        </div>
-        
+        <h1>تقييمات المقررات</h1>
         <div id="reviews-list">
             <div class="spinner"></div>
         </div>
-        
-        <div class="add-review-section">
-            <div class="section-header">
-                <h2>أضف تقييمًا جديدًا</h2>
-                <p>شارك تجربتك مع المقررات الدراسية</p>
-            </div>
+        <hr>
+        <h2>أضف تقييمًا جديدًا</h2>
         <form id="review-form">
             <label for="studentName">اسمك:</label>
             <input type="text" id="studentName" name="studentName" required placeholder="مثال: حسام الحسون">
@@ -79,7 +49,6 @@
             <textarea id="reviewText" name="reviewText" required placeholder="اشرح لماذا قمت بهذا التقييم..."></textarea>
             <button type="submit">إرسال التقييم</button>
         </form>
-        </div>
         <div id="success-message" class="success-popup" style="display: none;">
             ✓ تم إرسال تقييمك بنجاح!
         </div>
