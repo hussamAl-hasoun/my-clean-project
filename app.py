@@ -90,6 +90,11 @@ def about():
     # This new route serves the about page
     return render_template('about.html')
 
+@app.route('/stats')
+def stats():
+    # This new route serves the statistics page
+    return render_template('stats.html')
+
 
 if __name__ == '__main__':
     setup_database()

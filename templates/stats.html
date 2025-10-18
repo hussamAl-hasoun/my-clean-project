@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>إحصائيات المقررات - بوابة الكلية التطبيقية</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div style="display: flex; align-items: center;">
+                <img src="/static/logo.jpg" alt="شعار الكلية التطبيقية بجامعة القصيم" class="logo">
+                <div class="header-title">
+                    <h2>جامعة القصيم</h2>
+                    <h1>الكلية التطبيقية</h1>
+                </div>
+            </div>
+            <nav>
+                <a href="/">تقييم المقررات</a>
+                <a href="/stats" class="active">الإحصائيات</a>
+                <a href="/about">عن الكلية</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">إحصائيات وتحليلات المقررات</h1>
+            <p class="hero-subtitle">تصور شامل لتقييمات الطلاب وآرائهم في المقررات الدراسية</p>
+        </div>
+    </section>
+
+    <main class="container" style="max-width: 1200px;">
+        <!-- Overall Stats -->
+        <div class="stats-overview">
+            <div class="stat-box">
+                <i class="fas fa-star"></i>
+                <h3 id="overall-avg">0.0</h3>
+                <p>متوسط التقييم العام</p>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-comments"></i>
+                <h3 id="total-reviews-stat">0</h3>
+                <p>إجمالي التقييمات</p>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-book"></i>
+                <h3 id="rated-courses">0</h3>
+                <p>مقرر تم تقييمه</p>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-trophy"></i>
+                <h3 id="top-course">--</h3>
+                <p>أعلى مقرر تقييماً</p>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="charts-section">
+            <div class="chart-container">
+                <h2>توزيع التقييمات حسب النجوم</h2>
+                <canvas id="ratingsChart"></canvas>
+            </div>
+            <div class="chart-container">
+                <h2>أعلى 5 مقررات تقييماً</h2>
+                <canvas id="topCoursesChart"></canvas>
+            </div>
+        </div>
+
+        <!-- Detailed Course Stats -->
+        <div class="section-header" style="margin-top: 4rem;">
+            <h2>تفاصيل تقييمات المقررات</h2>
+            <p>جدول شامل لجميع المقررات مع إحصائيات مفصلة</p>
+        </div>
+
+        <div class="courses-table-container">
+            <table class="courses-table" id="coursesTable">
+                <thead>
+                    <tr>
+                        <th>المقرر</th>
+                        <th>عدد التقييمات</th>
+                        <th>متوسط التقييم</th>
+                        <th>التقييم</th>
+                    </tr>
+                </thead>
+                <tbody id="courseTableBody">
+                    <tr>
+                        <td colspan="4" style="text-align: center;">
+                            <div class="spinner"></div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 مشروع تخرج - حسام الحسون. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script src="/static/stats.js"></script>
+</body>
+</html>
