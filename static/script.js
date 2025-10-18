@@ -1,27 +1,37 @@
 document.addEventListener('DOMContentLoaded', () => {
     const reviewsList = document.getElementById('reviews-list');
     const reviewForm = document.getElementById('review-form');
+    const courseSelect = document.getElementById('courseName');
 
-    // --- Function to generate stars from a rating number ---
-    function renderStars(rating) {
-        let stars = '';
-        for (let i = 1; i <= 5; i++) {
-            stars += `<i class="fa fa-star ${i <= rating ? 'checked' : ''}"></i>`;
+    async function fetchCourses() {
+        try {
+            const response = await fetch('/api/courses');
+            const courses = await response.json();
+            courseSelect.innerHTML = '<option value="">-- اختر مقررًا --</option>';
+            courses.forEach(course => {
+                const option = document.createElement('option');
+                option.value = course;
+                option.textContent = course;
+                courseSelect.appendChild(option);
+            });
+        } catch (error) {
+            courseSelect.innerHTML = '<option value="">-- فشل تحميل المقررات --</option>';
         }
-        return `<div class="review-stars">${stars}</div>`;
     }
 
-    // --- Function to fetch and display reviews ---
     async function fetchReviews() {
-        reviewsList.innerHTML = '<p>جاري تحميل التقييمات...</p>';
+        reviewsList.innerHTML = '<div class="spinner"></div>'; // Show spinner
         try {
             const response = await fetch('/api/reviews');
             const reviews = await response.json();
-
-            reviewsList.innerHTML = ''; // Clear the loading message
+            reviewsList.innerHTML = ''; // Clear spinner
+            if (reviews.length === 0) {
+                reviewsList.innerHTML = '<p>لا توجد تقييمات حاليًا. كن أول من يضيف تقييمًا!</p>';
+                return;
+            }
             reviews.forEach(review => {
                 const reviewElement = document.createElement('div');
-                reviewElement.className = 'review-card'; // Use the card style
+                reviewElement.className = 'review-card';
                 reviewElement.innerHTML = `
                     <h3><strong>المقرر:</strong> ${review.courseName}</h3>
                     ${renderStars(review.rating)}
@@ -31,25 +41,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 reviewsList.appendChild(reviewElement);
             });
         } catch (error) {
-            reviewsList.innerHTML = '<p>حدث خطأ أثناء تحميل التقييمات.</p>';
+            reviewsList.innerHTML = '<p>حدث خطأ أثناء تحميل التقييمات. الرجاء المحاولة مرة أخرى.</p>';
         }
     }
 
-    // --- Function to handle form submission ---
     reviewForm.addEventListener('submit', async (event) => {
         event.preventDefault();
-
-        // Get the selected star rating
-        const rating = document.querySelector('input[name="rating"]:checked').value;
-
+        const ratingElement = document.querySelector('input[name="rating"]:checked');
+        if (!ratingElement) { alert('الرجاء اختيار تقييم بالنجوم.'); return; }
+        
         const newReview = {
             studentName: document.getElementById('studentName').value,
             courseName: document.getElementById('courseName').value,
-            rating: parseInt(rating), // Convert rating to a number
+            rating: parseInt(ratingElement.value),
             reviewText: document.getElementById('reviewText').value
         };
 
         try {
+            const submitButton = reviewForm.querySelector('button');
+            submitButton.disabled = true;
+            submitButton.textContent = 'جاري الإرسال...';
+
             await fetch('/api/reviews', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -58,16 +70,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
             reviewForm.reset();
             fetchReviews();
+
+            const successMsg = document.getElementById('success-message');
+            successMsg.style.display = 'block';
+            setTimeout(() => {
+                successMsg.style.display = 'none';
+            }, 3000);
+
         } catch (error) {
             alert('حدث خطأ أثناء إرسال التقييم.');
+        } finally {
+            const submitButton = reviewForm.querySelector('button');
+            submitButton.disabled = false;
+            submitButton.textContent = 'إرسال التقييم';
         }
     });
 
-    // --- Initial Load ---
+    function renderStars(rating) { let stars = ''; for (let i = 1; i <= 5; i++) { stars += `<i class="fa fa-star ${i <= rating ? 'checked' : ''}"></i>`; } return `<div class="review-stars">${stars}</div>`; }
+    const style = document.createElement('style'); style.innerHTML = `.review-stars .fa-star.checked { color: #facc15; }`; document.head.appendChild(style);
+    
+    // Initial Load
+    fetchCourses();
     fetchReviews();
-
-    // Add a specific style for the checked stars in the review list
-    const style = document.createElement('style');
-    style.innerHTML = `.review-stars .fa-star.checked { color: #f6e05e; }`;
-    document.head.appendChild(style);
 });

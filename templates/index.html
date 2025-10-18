@@ -2,28 +2,39 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <title>منصة تقييم المقررات</title>
+    <title>بوابة الكلية التطبيقية - جامعة القصيم</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
-    <div class="container">
+    <header>
+        <div class="header-container">
+            <img src="/static/logo.jpg" alt="شعار الكلية التطبيقية بجامعة القصيم" class="logo">
+            <div class="header-title">
+                <h2>جامعة القصيم</h2>
+                <h1>الكلية التطبيقية</h1>
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
         <h1>تقييمات المقررات</h1>
         <div id="reviews-list">
-            <p>جاري تحميل التقييمات...</p>
-        </div>
+            <div class="spinner"></div> </div>
 
         <hr>
 
         <h2>أضف تقييمًا جديدًا</h2>
         <form id="review-form">
             <label for="studentName">اسمك:</label>
-            <input type="text" id="studentName" name="studentName" required>
+            <input type="text" id="studentName" name="studentName" required placeholder="مثال: حسام الحسون">
 
-            <label for="courseName">اسم المقرر:</label>
-            <input type="text" id="courseName" name="courseName" required>
+            <label for="courseName">اختر المقرر:</label>
+            <select id="courseName" name="courseName" required>
+                <option value="">-- جاري تحميل المقررات --</option>
+            </select>
 
             <label>تقييمك بالنجوم:</label>
             <div class="star-rating">
@@ -35,13 +46,20 @@
             </div>
 
             <label for="reviewText">ملاحظاتك:</label>
-            <textarea id="reviewText" name="reviewText" required></textarea>
+            <textarea id="reviewText" name="reviewText" required placeholder="اشرح لماذا قمت بهذا التقييم..."></textarea>
 
             <button type="submit">إرسال التقييم</button>
         </form>
-    </div>
+        
+        <div id="success-message" class="success-popup" style="display: none;">
+            ✓ تم إرسال تقييمك بنجاح!
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 مشروع تخرج - حسام الحسون. جميع الحقوق محفوظة.</p>
+    </footer>
 
     <script src="/static/script.js"></script>
-
 </body>
 </html>
