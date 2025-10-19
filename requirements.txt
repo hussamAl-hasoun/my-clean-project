@@ -1,2 +1,5 @@
 Flask
 mysql-connector-python
+flake8
+safety
+pytest
