@@ -99,7 +99,21 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     const style = document.createElement('style');
-    style.innerHTML = `.review-stars .fa-star.checked { color: #facc15; }`;
+    style.innerHTML = `
+        .review-stars .fa-star.checked { 
+            color: #fbbf24; 
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+            animation: starGlow 3s ease-in-out infinite;
+        }
+        @keyframes starGlow {
+            0%, 100% { 
+                text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+            }
+            50% { 
+                text-shadow: 0 0 25px rgba(251, 191, 36, 1);
+            }
+        }
+    `;
     document.head.appendChild(style);
     
     // --- NEW: Update Statistics ---

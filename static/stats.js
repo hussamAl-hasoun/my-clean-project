@@ -1,3 +1,17 @@
+// Add enhanced star animations
+const style = document.createElement('style');
+style.innerHTML = `
+    @keyframes starGlow {
+        0%, 100% { 
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+        }
+        50% { 
+            text-shadow: 0 0 25px rgba(251, 191, 36, 1);
+        }
+    }
+`;
+document.head.appendChild(style);
+
 document.addEventListener('DOMContentLoaded', async () => {
     try {
         const response = await fetch('/api/reviews');
@@ -57,20 +71,22 @@ document.addEventListener('DOMContentLoaded', async () => {
                     label: 'عدد التقييمات',
                     data: starCounts,
                     backgroundColor: [
-                        'rgba(239, 68, 68, 0.7)',
-                        'rgba(251, 146, 60, 0.7)',
-                        'rgba(251, 191, 36, 0.7)',
-                        'rgba(132, 204, 22, 0.7)',
-                        'rgba(34, 197, 94, 0.7)'
+                        'rgba(139, 92, 246, 0.8)',
+                        'rgba(59, 130, 246, 0.8)',
+                        'rgba(6, 182, 212, 0.8)',
+                        'rgba(16, 185, 129, 0.8)',
+                        'rgba(251, 191, 36, 0.8)'
                     ],
                     borderColor: [
-                        'rgb(239, 68, 68)',
-                        'rgb(251, 146, 60)',
-                        'rgb(251, 191, 36)',
-                        'rgb(132, 204, 22)',
-                        'rgb(34, 197, 94)'
+                        'rgb(139, 92, 246)',
+                        'rgb(59, 130, 246)',
+                        'rgb(6, 182, 212)',
+                        'rgb(16, 185, 129)',
+                        'rgb(251, 191, 36)'
                     ],
-                    borderWidth: 2
+                    borderWidth: 3,
+                    borderRadius: 8,
+                    borderSkipped: false,
                 }]
             },
             options: {
@@ -82,17 +98,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                         display: false
                     }
                 },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                },
                 scales: {
                     y: {
                         beginAtZero: true,
                         ticks: { 
-                            color: '#cbd5e1',
-                            stepSize: 1
+                            color: '#e2e8f0',
+                            stepSize: 1,
+                            font: { size: 14, weight: 'bold' }
                         },
-                        grid: { color: 'rgba(203, 213, 225, 0.1)' }
+                        grid: { 
+                            color: 'rgba(139, 92, 246, 0.2)',
+                            lineWidth: 2
+                        }
                     },
                     x: {
-                        ticks: { color: '#cbd5e1', font: { size: 16 } },
+                        ticks: { 
+                            color: '#e2e8f0', 
+                            font: { size: 18, weight: 'bold' } 
+                        },
                         grid: { display: false }
                     }
                 }
@@ -103,15 +130,17 @@ document.addEventListener('DOMContentLoaded', async () => {
         const top5Courses = sortedCourses.slice(0, 5);
         const topCoursesCtx = document.getElementById('topCoursesChart').getContext('2d');
         new Chart(topCoursesCtx, {
-            type: 'horizontalBar',
+            type: 'bar',
             data: {
                 labels: top5Courses.map(c => c.name.length > 30 ? c.name.substring(0, 30) + '...' : c.name),
                 datasets: [{
                     label: 'متوسط التقييم',
                     data: top5Courses.map(c => parseFloat(c.average)),
-                    backgroundColor: 'rgba(124, 58, 237, 0.7)',
-                    borderColor: 'rgb(124, 58, 237)',
-                    borderWidth: 2
+                    backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                    borderColor: 'rgb(139, 92, 246)',
+                    borderWidth: 3,
+                    borderRadius: 8,
+                    borderSkipped: false,
                 }]
             },
             options: {
@@ -121,15 +150,28 @@ document.addEventListener('DOMContentLoaded', async () => {
                 plugins: {
                     legend: { display: false }
                 },
+                animation: {
+                    duration: 2000,
+                    easing: 'easeInOutQuart'
+                },
                 scales: {
                     x: {
                         beginAtZero: true,
                         max: 5,
-                        ticks: { color: '#cbd5e1' },
-                        grid: { color: 'rgba(203, 213, 225, 0.1)' }
+                        ticks: { 
+                            color: '#e2e8f0',
+                            font: { size: 14, weight: 'bold' }
+                        },
+                        grid: { 
+                            color: 'rgba(139, 92, 246, 0.2)',
+                            lineWidth: 2
+                        }
                     },
                     y: {
-                        ticks: { color: '#cbd5e1', font: { size: 11 } },
+                        ticks: { 
+                            color: '#e2e8f0', 
+                            font: { size: 12, weight: 'bold' } 
+                        },
                         grid: { display: false }
                     }
                 }
@@ -163,10 +205,10 @@ function renderStars(rating) {
     const hasHalf = rating % 1 >= 0.5;
     
     for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star" style="color: #fbbf24;"></i> ';
+        stars += '<i class="fas fa-star" style="color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8); animation: starGlow 3s ease-in-out infinite;"></i> ';
     }
     if (hasHalf) {
-        stars += '<i class="fas fa-star-half-alt" style="color: #fbbf24;"></i> ';
+        stars += '<i class="fas fa-star-half-alt" style="color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8); animation: starGlow 3s ease-in-out infinite;"></i> ';
     }
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
