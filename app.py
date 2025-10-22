@@ -144,7 +144,19 @@ def add_review():
 # --- Frontend Route ---
 @app.route('/')
 def home():
-    return render_template('reviews.html') # Make sure this matches your renamed file
+    return render_template('about.html')
+
+@app.route('/reviews')
+def reviews():
+    return render_template('reviews.html')
+
+@app.route('/courses')
+def courses():
+    return render_template('courses.html')
+
+@app.route('/stats')
+def stats():
+    return render_template('stats.html')
 
 @app.route('/about')
 def about():

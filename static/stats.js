@@ -1,13 +1,9 @@
-// Add enhanced star animations
+// Add enhanced star styles
 const style = document.createElement('style');
 style.innerHTML = `
-    @keyframes starGlow {
-        0%, 100% { 
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
-        }
-        50% { 
-            text-shadow: 0 0 25px rgba(251, 191, 36, 1);
-        }
+    .review-stars .fa-star.checked { 
+        color: #f59e0b; 
+        text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
     }
 `;
 document.head.appendChild(style);
@@ -205,14 +201,24 @@ function renderStars(rating) {
     const hasHalf = rating % 1 >= 0.5;
     
     for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star" style="color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8); animation: starGlow 3s ease-in-out infinite;"></i> ';
+        stars += '<i class="fas fa-star" style="color: #f59e0b; text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);"></i> ';
     }
     if (hasHalf) {
-        stars += '<i class="fas fa-star-half-alt" style="color: #fbbf24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8); animation: starGlow 3s ease-in-out infinite;"></i> ';
+        stars += '<i class="fas fa-star-half-alt" style="color: #f59e0b; text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);"></i> ';
     }
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
-        stars += '<i class="far fa-star" style="color: #475569;"></i> ';
+        stars += '<i class="far fa-star" style="color: #94a3b8;"></i> ';
     }
-    return stars;
+    
+    const ratingTexts = {
+        1: 'ضعيف جداً',
+        2: 'ضعيف',
+        3: 'متوسط', 
+        4: 'جيد',
+        5: 'ممتاز'
+    };
+    
+    const ratingText = ratingTexts[Math.round(rating)] || '';
+    return `<div style="text-align: center;">${stars}<br><small style="color: #1e40af; font-weight: 600;">${ratingText}</small></div>`;
 }

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>المقررات الدراسية - بوابة الكلية التطبيقية</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div style="display: flex; align-items: center;">
+                <img src="/static/logo.jpg" alt="شعار الكلية التطبيقية بجامعة القصيم" class="logo">
+                <div class="header-title">
+                    <h2>جامعة القصيم</h2>
+                    <h1>الكلية التطبيقية</h1>
+                </div>
+            </div>
+            <nav>
+                <a href="/">الرئيسية</a>
+                <a href="/reviews">تقييم المقررات</a>
+                <a href="/stats">الإحصائيات</a>
+                <a href="/courses" class="active">المقررات الدراسية</a>
+                <a href="/about">عن الكلية</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">المقررات الدراسية</h1>
+            <p class="hero-subtitle">اكتشف المقررات المتاحة في الكلية التطبيقية</p>
+        </div>
+    </section>
+
+    <main class="container">
+        <div class="section-header">
+            <h1>المقررات المتاحة</h1>
+            <p>جميع المقررات الدراسية في الكلية التطبيقية</p>
+        </div>
+
+        <div class="courses-grid" id="courses-grid">
+            <div class="spinner"></div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 مشروع تخرج - حسام الحسون. جميع الحقوق محفوظة.</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            try {
+                const response = await fetch('/api/courses');
+                const courses = await response.json();
+                
+                const coursesGrid = document.getElementById('courses-grid');
+                coursesGrid.innerHTML = '';
+                
+                courses.forEach(course => {
+                    const courseCard = document.createElement('div');
+                    courseCard.className = 'course-card';
+                    courseCard.innerHTML = `
+                        <div class="course-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <h3>${course}</h3>
+                        <p>مقرر دراسي متاح للتقييم</p>
+                        <a href="/reviews" class="course-link">تقييم المقرر</a>
+                    `;
+                    coursesGrid.appendChild(courseCard);
+                });
+            } catch (error) {
+                document.getElementById('courses-grid').innerHTML = 
+                    '<p style="text-align: center; color: #ef4444;">حدث خطأ أثناء تحميل المقررات</p>';
+            }
+        });
+    </script>
+</body>
+</html>

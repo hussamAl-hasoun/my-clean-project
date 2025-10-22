@@ -25,7 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i <= 5; i++) {
             stars += `<i class="fa fa-star ${i <= rating ? 'checked' : ''}"></i>`;
         }
-        return `<div class="review-stars">${stars}</div>`;
+        
+        const ratingTexts = {
+            1: 'ضعيف جداً',
+            2: 'ضعيف', 
+            3: 'متوسط',
+            4: 'جيد',
+            5: 'ممتاز'
+        };
+        
+        return `<div class="review-stars">${stars}</div><div class="rating-text">${ratingTexts[rating] || ''}</div>`;
     }
 
     async function fetchReviews() {
@@ -101,17 +110,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const style = document.createElement('style');
     style.innerHTML = `
         .review-stars .fa-star.checked { 
-            color: #fbbf24; 
-            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
-            animation: starGlow 3s ease-in-out infinite;
-        }
-        @keyframes starGlow {
-            0%, 100% { 
-                text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
-            }
-            50% { 
-                text-shadow: 0 0 25px rgba(251, 191, 36, 1);
-            }
+            color: #f59e0b; 
+            text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
         }
     `;
     document.head.appendChild(style);
@@ -153,6 +153,24 @@ document.addEventListener('DOMContentLoaded', () => {
             element.textContent = Math.floor(current);
         }, 16);
     }
+
+    // --- Enhanced Star Rating with Text ---
+    const starRating = document.querySelector('.star-rating');
+    const ratingTexts = {
+        1: 'ضعيف جداً',
+        2: 'ضعيف',
+        3: 'متوسط',
+        4: 'جيد',
+        5: 'ممتاز'
+    };
+
+    // Add event listeners to stars
+    document.querySelectorAll('.star-rating input[type="radio"]').forEach(input => {
+        input.addEventListener('change', function() {
+            const rating = parseInt(this.value);
+            starRating.setAttribute('data-rating-text', ratingTexts[rating]);
+        });
+    });
 
     // --- Initial Load ---
     fetchCourses(); // Fetch courses when the page loads
