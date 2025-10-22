@@ -4,7 +4,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #1e3a8a 0%, #1e40af 25%, #2563eb 50%, #3b82f6 75%, #60a5fa 100%);
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 25%, #388E3C 50%, #4CAF50 75%, #66BB6A 100%);
     background-attachment: fixed;
     color: #1e293b;
     font-family: 'Tajawal', sans-serif;
@@ -26,10 +26,10 @@ body::before {
     width: 100%;
     height: 100%;
     background-image: 
-        radial-gradient(circle at 20% 20%, rgba(30, 58, 138, 0.1) 0%, transparent 60%),
-        radial-gradient(circle at 80% 80%, rgba(37, 99, 235, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 40% 60%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
-        radial-gradient(circle at 60% 40%, rgba(96, 165, 250, 0.04) 0%, transparent 50%);
+        radial-gradient(circle at 20% 20%, rgba(27, 94, 32, 0.1) 0%, transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(46, 125, 50, 0.08) 0%, transparent 60%),
+        radial-gradient(circle at 40% 60%, rgba(56, 142, 60, 0.06) 0%, transparent 50%),
+        radial-gradient(circle at 60% 40%, rgba(76, 175, 80, 0.04) 0%, transparent 50%);
     pointer-events: none;
     z-index: 0;
 }
@@ -37,9 +37,9 @@ body::before {
 
 /* --- Professional Header --- */
 header {
-    background: linear-gradient(135deg, rgba(30, 58, 138, 0.95) 0%, rgba(37, 99, 235, 0.95) 50%, rgba(59, 130, 246, 0.95) 100%);
+    background: linear-gradient(135deg, rgba(27, 94, 32, 0.95) 0%, rgba(46, 125, 50, 0.95) 50%, rgba(56, 142, 60, 0.95) 100%);
     padding: 1.2rem 2rem;
-    border-bottom: 3px solid rgba(30, 58, 138, 0.8);
+    border-bottom: 3px solid rgba(27, 94, 32, 0.8);
     position: fixed;
     top: 0;
     left: 0;
@@ -47,7 +47,7 @@ header {
     z-index: 100;
     box-shadow: 
         0 4px 20px rgba(0, 0, 0, 0.2),
-        0 0 40px rgba(30, 58, 138, 0.1);
+        0 0 40px rgba(27, 94, 32, 0.1);
     backdrop-filter: blur(10px);
     transition: all 0.3s ease;
 }
@@ -55,7 +55,7 @@ header {
 header:hover {
     box-shadow: 
         0 6px 25px rgba(0, 0, 0, 0.3),
-        0 0 50px rgba(30, 58, 138, 0.2);
+        0 0 50px rgba(27, 94, 32, 0.2);
     transform: translateY(-1px);
 }
 
@@ -120,7 +120,7 @@ select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF
     padding: 1.5rem;
     background: rgba(248, 250, 252, 0.8);
     border-radius: 12px;
-    border: 2px solid rgba(30, 58, 138, 0.2);
+    border: 2px solid rgba(27, 94, 32, 0.2);
     position: relative;
 }
 
@@ -131,7 +131,7 @@ select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF
     left: 50%;
     transform: translateX(-50%);
     font-size: 0.9rem;
-    color: #1e40af;
+    color: #2E7D32;
     font-weight: 600;
     text-align: center;
     white-space: nowrap;
@@ -284,7 +284,7 @@ nav a:hover, nav a.active {
 
 /* --- NEW: Hero Section Styles --- */
 .hero-section {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 50%, #475569 100%);
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
     padding: 120px 0 80px 0;
     text-align: center;
     position: relative;
@@ -396,9 +396,9 @@ nav a:hover, nav a.active {
     transform: translateX(-50%);
     width: 80px;
     height: 4px;
-    background: linear-gradient(90deg, #8b5cf6, #3b82f6, #06b6d4);
+    background: linear-gradient(90deg, #2E7D32, #388E3C, #4CAF50);
     border-radius: 3px;
-    box-shadow: 0 2px 10px rgba(139, 92, 246, 0.4);
+    box-shadow: 0 2px 10px rgba(46, 125, 50, 0.4);
 }
 
 .section-header h2 {
@@ -420,11 +420,11 @@ nav a:hover, nav a.active {
 
 /* --- NEW: Add Review Section --- */
 .add-review-section {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     padding: 3rem;
     border-radius: 20px;
     margin-top: 3rem;
-    border: 1px solid #475569;
+    border: 1px solid #388E3C;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
     max-width: 900px;
     margin-left: auto;
@@ -515,7 +515,7 @@ nav a:hover, nav a.active {
 /* --- Enhanced Review Cards --- */
 .review-card {
     background: linear-gradient(135deg, #ffffff 0%, #f8fafc 50%, #f1f5f9 100%);
-    border: 2px solid rgba(30, 58, 138, 0.2);
+    border: 2px solid rgba(27, 94, 32, 0.2);
     border-radius: 12px;
     padding: 2rem;
     margin-bottom: 2rem;
@@ -524,7 +524,7 @@ nav a:hover, nav a.active {
     overflow: hidden;
     box-shadow: 
         0 4px 15px rgba(0, 0, 0, 0.1),
-        0 0 20px rgba(30, 58, 138, 0.05);
+        0 0 20px rgba(27, 94, 32, 0.05);
 }
 
 .review-card::before {
@@ -534,15 +534,15 @@ nav a:hover, nav a.active {
     left: 0;
     width: 100%;
     height: 3px;
-    background: linear-gradient(90deg, #7dd3fc, #3b82f6);
+    background: linear-gradient(90deg, #4CAF50, #388E3C);
 }
 
 .review-card:hover {
     transform: translateY(-5px);
     box-shadow: 
         0 8px 25px rgba(0, 0, 0, 0.15),
-        0 0 30px rgba(30, 58, 138, 0.1);
-    border-color: #1e40af;
+        0 0 30px rgba(27, 94, 32, 0.1);
+    border-color: #2E7D32;
 }
 
 @keyframes cardFloat {
@@ -556,7 +556,7 @@ nav a:hover, nav a.active {
 
 .review-card h3 {
     margin-top: 0;
-    color: #1e40af;
+    color: #2E7D32;
     font-size: 1.3rem;
     margin-bottom: 1rem;
     font-weight: 600;
@@ -567,7 +567,7 @@ nav a:hover, nav a.active {
 }
 
 .rating-text {
-    color: #1e40af;
+    color: #2E7D32;
     font-weight: 600;
     font-size: 0.9rem;
     text-align: center;
@@ -612,7 +612,7 @@ nav a:hover, nav a.active {
 /* --- Enhanced Form Styles --- */
 input, select, textarea {
     background: #ffffff;
-    border: 2px solid rgba(30, 58, 138, 0.2);
+    border: 2px solid rgba(27, 94, 32, 0.2);
     border-radius: 8px;
     transition: all 0.3s ease;
     box-shadow: 
@@ -621,17 +621,17 @@ input, select, textarea {
 }
 
 input:focus, select:focus, textarea:focus {
-    border-color: #1e40af;
+    border-color: #2E7D32;
     box-shadow: 
-        0 0 0 3px rgba(30, 64, 175, 0.2),
-        0 4px 15px rgba(30, 58, 138, 0.1);
+        0 0 0 3px rgba(46, 125, 50, 0.2),
+        0 4px 15px rgba(27, 94, 32, 0.1);
     outline: none;
     transform: translateY(-1px);
     background: #ffffff;
 }
 
 button[type="submit"] {
-    background: linear-gradient(135deg, #1e40af 0%, #2563eb 50%, #3b82f6 100%);
+    background: linear-gradient(135deg, #2E7D32 0%, #388E3C 50%, #4CAF50 100%);
     border: none;
     color: white;
     font-weight: 600;
@@ -643,7 +643,7 @@ button[type="submit"] {
     position: relative;
     overflow: hidden;
     box-shadow: 
-        0 4px 15px rgba(30, 64, 175, 0.3);
+        0 4px 15px rgba(46, 125, 50, 0.3);
 }
 
 button[type="submit"]::before {
@@ -660,8 +660,8 @@ button[type="submit"]::before {
 button[type="submit"]:hover {
     transform: translateY(-2px);
     box-shadow: 
-        0 6px 20px rgba(30, 64, 175, 0.4);
-    background: linear-gradient(135deg, #1d4ed8 0%, #2563eb 50%, #3b82f6 100%);
+        0 6px 20px rgba(46, 125, 50, 0.4);
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 50%, #388E3C 100%);
 }
 
 @keyframes buttonGlow {
@@ -813,11 +813,11 @@ button[type="submit"]:disabled {
 }
 
 .about-card {
-    background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+    background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 100%);
     padding: 2.5rem;
     border-radius: 20px;
     text-align: center;
-    border: 1px solid #475569;
+    border: 1px solid #388E3C;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
@@ -830,18 +830,18 @@ button[type="submit"]:disabled {
     left: 0;
     width: 100%;
     height: 4px;
-    background: linear-gradient(90deg, #7dd3fc, #3b82f6);
+    background: linear-gradient(90deg, #4CAF50, #388E3C);
 }
 
 .about-card:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-    border-color: #7dd3fc;
+    border-color: #4CAF50;
 }
 
 .card-icon {
     font-size: 3rem;
-    color: #7dd3fc;
+    color: #4CAF50;
     margin-bottom: 1.5rem;
     animation: pulse 2s infinite, float 3s ease-in-out infinite;
 }
