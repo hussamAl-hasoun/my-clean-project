@@ -1,17 +1,14 @@
 from flask import Flask, request, jsonify, render_template
 import mysql.connector
-import os # Ensure os is imported
+import os
 
-# Initialize the Flask application
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# --- Database Connection Details ---
-DB_HOST = "172.31.92.137" # Use the Private IP
+DB_HOST = "172.31.92.137"
 DB_USER = "admin"
-DB_PASSWORD = "Aa001916" # Your actual password
+DB_PASSWORD = "Aa001916"
 DB_NAME = "coursereviews"
 
-# --- List of Courses ---
 COURSES = [
     "ITCP101 - أساسيات تقنية المعلومات", "AHEC101 - اللغة الإنجليزية لعلوم الحاسب (1)",
     "ITCL101 - البنية التحتية وخدمات الحوسبة السحابية", "ITBS106 - شبكات الحاسب", "ITBS104 - نظم التشغيل",
@@ -23,7 +20,6 @@ COURSES = [
     "ITCL207 - قواعد البيانات السحابية", "ITCL206 - ديف أوبس للسحابة", "ITCL205 - تحليل التكلفة للسحابة"
 ]
 
-# --- Function to get a database connection ---
 def get_db_connection():
     try:
         conn = mysql.connector.connect(
@@ -36,7 +32,6 @@ def get_db_connection():
         print(f"Error connecting to database: {err}")
         return None
 
-# --- UPDATED: Create/Update database and table ---
 def setup_database():
     conn = get_db_connection()
     if conn is None:
@@ -44,11 +39,9 @@ def setup_database():
         return
     try:
         cursor = conn.cursor()
-        # Added character set and collation for Arabic support
         cursor.execute(f"CREATE DATABASE IF NOT EXISTS {DB_NAME} CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci")
         cursor.execute(f"USE {DB_NAME}")
 
-        # Create table if it doesn't exist (original structure first)
         cursor.execute("""
             CREATE TABLE IF NOT EXISTS reviews (
                 id INT AUTO_INCREMENT PRIMARY KEY,
@@ -58,8 +51,6 @@ def setup_database():
                 createdAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
             ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
         """)
-
-        # --- SMART UPDATE: Check if 'rating' column exists and add it if not ---
         cursor.execute(f"""
             SELECT COUNT(*) FROM information_schema.COLUMNS
             WHERE TABLE_SCHEMA = '{DB_NAME}' AND TABLE_NAME = 'reviews' AND COLUMN_NAME = 'rating';
@@ -68,11 +59,19 @@ def setup_database():
 
         if not column_exists:
             print("Adding missing 'rating' column to 'reviews' table...")
-            # Added AFTER courseName for better structure
-            cursor.execute("ALTER TABLE reviews ADD COLUMN rating INT NOT NULL AFTER courseName")
+            cursor.execute("ALTER TABLE reviews ADD COLUMN rating DECIMAL(2,1) NOT NULL AFTER courseName")
             print("'rating' column added successfully.")
         else:
             print("'rating' column already exists.")
+            cursor.execute(f"""
+                SELECT DATA_TYPE FROM information_schema.COLUMNS
+                WHERE TABLE_SCHEMA = '{DB_NAME}' AND TABLE_NAME = 'reviews' AND COLUMN_NAME = 'rating';
+            """)
+            data_type = cursor.fetchone()[0]
+            if data_type != 'decimal':
+                print("Updating 'rating' column to DECIMAL for half-star support...")
+                cursor.execute("ALTER TABLE reviews MODIFY COLUMN rating DECIMAL(2,1) NOT NULL")
+                print("'rating' column updated to DECIMAL successfully.")
 
         conn.commit()
         print("Database and table setup/update complete.")
@@ -80,13 +79,12 @@ def setup_database():
     except mysql.connector.Error as err:
         print(f"Error during database setup: {err}")
         if conn and conn.is_connected():
-             conn.rollback() # Rollback in case of error
+             conn.rollback()
     finally:
         if conn and conn.is_connected():
             cursor.close()
             conn.close()
 
-# --- API Endpoints ---
 @app.route('/api/courses', methods=['GET'])
 def get_courses():
     return jsonify(COURSES)
@@ -94,18 +92,16 @@ def get_courses():
 @app.route('/api/reviews', methods=['GET'])
 def get_reviews():
     conn = get_db_connection()
-    # Check connection and database existence
     if not conn or not conn.is_connected():
         return jsonify({"error": "Database connection failed"}), 500
     try:
         cursor = conn.cursor(dictionary=True)
-        cursor.execute(f"USE {DB_NAME}") # Select DB before querying
+        cursor.execute(f"USE {DB_NAME}")
         cursor.execute("SELECT * FROM reviews ORDER BY createdAt DESC")
         reviews_data = cursor.fetchall()
         return jsonify(reviews_data)
     except mysql.connector.Error as err:
         print(f"Error fetching reviews: {err}")
-        # Check if the specific error is "Unknown database"
         if err.errno == mysql.connector.errorcode.ER_BAD_DB_ERROR:
              return jsonify({"error": f"Database '{DB_NAME}' not found. Setup might have failed."}), 500
         return jsonify({"error": "Could not fetch reviews"}), 500
@@ -117,7 +113,6 @@ def get_reviews():
 @app.route('/api/reviews', methods=['POST'])
 def add_review():
     new_review = request.get_json()
-    # Basic validation
     if not all(k in new_review for k in ('studentName', 'courseName', 'rating', 'reviewText')):
         return jsonify({"error": "Missing data in request"}), 400
 
@@ -128,7 +123,7 @@ def add_review():
         cursor = conn.cursor()
         cursor.execute(f"USE {DB_NAME}")
         query = "INSERT INTO reviews (studentName, courseName, rating, reviewText) VALUES (%s, %s, %s, %s)"
-        cursor.execute(query, (new_review['studentName'], new_review['courseName'], int(new_review['rating']), new_review['reviewText']))
+        cursor.execute(query, (new_review['studentName'], new_review['courseName'], float(new_review['rating']), new_review['reviewText']))
         conn.commit()
         return jsonify({"status": "success"})
     except mysql.connector.Error as err:
@@ -141,7 +136,6 @@ def add_review():
             cursor.close()
             conn.close()
 
-# --- Frontend Route ---
 @app.route('/')
 def home():
     return render_template('about.html')
@@ -162,10 +156,8 @@ def stats():
 def about():
     return render_template('about.html')
 
-# --- Main execution block ---
 if __name__ == '__main__':
     print("Attempting to set up database on startup...")
     setup_database()
     print("Starting Flask application...")
-    # Use app.run() which is fine for development/testing inside Docker
     app.run(host='0.0.0.0', port=5000)

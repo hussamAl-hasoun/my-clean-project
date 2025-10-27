@@ -3,12 +3,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewForm = document.getElementById('review-form');
     const courseSelect = document.getElementById('courseName');
 
-    // --- NEW: Function to fetch courses and populate the dropdown ---
     async function fetchCourses() {
         try {
             const response = await fetch('/api/courses');
             const courses = await response.json();
-            courseSelect.innerHTML = '<option value="">-- اختر مقررًا --</option>'; // Clear loading message
+            courseSelect.innerHTML = '<option value="">-- اختر مقررًا --</option>';
             courses.forEach(course => {
                 const option = document.createElement('option');
                 option.value = course;
@@ -22,19 +21,33 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderStars(rating) {
         let stars = '';
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 !== 0;
+        
         for (let i = 1; i <= 5; i++) {
-            stars += `<i class="fa fa-star ${i <= rating ? 'checked' : ''}"></i>`;
+            if (i <= fullStars) {
+                stars += `<i class="fa fa-star checked"></i>`;
+            } else if (i === fullStars + 1 && hasHalfStar) {
+                stars += `<i class="fa fa-star-half-alt checked"></i>`;
+            } else {
+                stars += `<i class="fa fa-star"></i>`;
+            }
         }
         
         const ratingTexts = {
+            0.5: 'ضعيف جداً',
             1: 'ضعيف جداً',
+            1.5: 'ضعيف',
             2: 'ضعيف', 
+            2.5: 'مقبول',
             3: 'متوسط',
+            3.5: 'جيد',
             4: 'جيد',
+            4.5: 'جيد جداً',
             5: 'ممتاز'
         };
         
-        return `<div class="review-stars">${stars}</div><div class="rating-text">${ratingTexts[rating] || ''}</div>`;
+        return `<div class="review-stars">${stars}</div><div class="rating-text">${ratingTexts[rating] || rating + ' نجوم'}</div>`;
     }
 
     async function fetchReviews() {
@@ -58,7 +71,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 `;
                 reviewsList.appendChild(reviewElement);
             });
-            // Update statistics after loading reviews
             updateStatistics();
         } catch (error) {
             reviewsList.innerHTML = '<p>حدث خطأ أثناء تحميل التقييمات. الرجاء المحاولة مرة أخرى.</p>';
@@ -76,7 +88,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newReview = {
             studentName: document.getElementById('studentName').value,
             courseName: document.getElementById('courseName').value,
-            rating: parseInt(ratingElement.value),
+            rating: parseFloat(ratingElement.value),
             reviewText: document.getElementById('reviewText').value
         };
 
@@ -109,23 +121,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const style = document.createElement('style');
     style.innerHTML = `
-        .review-stars .fa-star.checked { 
+        .review-stars .fa-star.checked,
+        .review-stars .fa-star-half-alt.checked { 
             color: #f59e0b; 
             text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
         }
     `;
     document.head.appendChild(style);
     
-    // --- NEW: Update Statistics ---
     async function updateStatistics() {
         try {
             const response = await fetch('/api/reviews');
             const reviews = await response.json();
             
-            // Update total reviews
             document.getElementById('total-reviews').textContent = reviews.length;
             
-            // Calculate average rating
             if (reviews.length > 0) {
                 const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
                 const avgRating = (totalRating / reviews.length).toFixed(1);
@@ -138,7 +148,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- NEW: Animate numbers ---
     function animateNumber(element, target, duration = 1000) {
         const start = 0;
         const increment = target / (duration / 16);
@@ -154,26 +163,28 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 16);
     }
 
-    // --- Enhanced Star Rating with Text ---
     const starRating = document.querySelector('.star-rating');
     const ratingTexts = {
+        0.5: 'ضعيف جداً',
         1: 'ضعيف جداً',
+        1.5: 'ضعيف',
         2: 'ضعيف',
+        2.5: 'مقبول',
         3: 'متوسط',
+        3.5: 'جيد',
         4: 'جيد',
+        4.5: 'جيد جداً',
         5: 'ممتاز'
     };
 
-    // Add event listeners to stars
     document.querySelectorAll('.star-rating input[type="radio"]').forEach(input => {
         input.addEventListener('change', function() {
-            const rating = parseInt(this.value);
-            starRating.setAttribute('data-rating-text', ratingTexts[rating]);
+            const rating = parseFloat(this.value);
+            starRating.setAttribute('data-rating-text', ratingTexts[rating] || rating + ' نجوم');
         });
     });
 
-    // --- Initial Load ---
-    fetchCourses(); // Fetch courses when the page loads
+    fetchCourses();
     fetchReviews();
-    updateStatistics(); // Update statistics
+    updateStatistics();
 });

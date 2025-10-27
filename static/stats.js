@@ -1,4 +1,3 @@
-// Add enhanced star styles
 const style = document.createElement('style');
 style.innerHTML = `
     .review-stars .fa-star.checked { 
@@ -9,7 +8,7 @@ style.innerHTML = `
 document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', async () => {
-    try {
+        try {
         const response = await fetch('/api/reviews');
         const reviews = await response.json();
         
@@ -18,8 +17,6 @@ document.addEventListener('DOMContentLoaded', async () => {
                 '<tr><td colspan="4" style="text-align: center; padding: 2rem;">لا توجد تقييمات متاحة حالياً</td></tr>';
             return;
         }
-
-        // Calculate statistics
         const courseStats = {};
         reviews.forEach(review => {
             if (!courseStats[review.courseName]) {
@@ -35,26 +32,22 @@ document.addEventListener('DOMContentLoaded', async () => {
             courseStats[review.courseName].total += review.rating;
         });
 
-        // Calculate averages
         Object.keys(courseStats).forEach(key => {
             courseStats[key].average = (courseStats[key].total / courseStats[key].count).toFixed(2);
         });
 
-        // Overall statistics
         const totalRatings = reviews.reduce((sum, r) => sum + r.rating, 0);
         const overallAvg = (totalRatings / reviews.length).toFixed(1);
         document.getElementById('overall-avg').textContent = overallAvg;
         document.getElementById('total-reviews-stat').textContent = reviews.length;
         document.getElementById('rated-courses').textContent = Object.keys(courseStats).length;
 
-        // Find top course
         const sortedCourses = Object.values(courseStats).sort((a, b) => b.average - a.average);
         if (sortedCourses.length > 0) {
             const topCourse = sortedCourses[0].name.split(' - ')[0];
             document.getElementById('top-course').textContent = topCourse;
         }
 
-        // Star distribution chart
         const starCounts = [0, 0, 0, 0, 0];
         reviews.forEach(r => starCounts[r.rating - 1]++);
         
@@ -122,7 +115,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        // Top courses chart
         const top5Courses = sortedCourses.slice(0, 5);
         const topCoursesCtx = document.getElementById('topCoursesChart').getContext('2d');
         new Chart(topCoursesCtx, {
@@ -174,7 +166,6 @@ document.addEventListener('DOMContentLoaded', async () => {
             }
         });
 
-        // Populate table
         const tableBody = document.getElementById('courseTableBody');
         tableBody.innerHTML = '';
         sortedCourses.forEach(course => {
