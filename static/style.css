@@ -220,32 +220,14 @@ select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.star-rating .star.half {
-    background: linear-gradient(90deg, #2D3748 50%, transparent 50%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    position: relative;
-}
-
-.star-rating .star.half::before {
-    content: '★';
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 50%;
-    overflow: hidden;
-    color: #2D3748;
-    -webkit-text-fill-color: #2D3748;
-}
+/* Half star styling removed - all stars are now uniform */
 
 .star-rating .star:hover { 
     color: #FFD700; 
     text-shadow: 
         0 0 20px rgba(255, 215, 0, 0.9),
-        0 0 40px rgba(255, 215, 0, 0.6),
-        0 0 60px rgba(255, 215, 0, 0.3);
-    transform: scale(1.3) rotate(5deg);
+        0 0 40px rgba(255, 215, 0, 0.6);
+    transform: scale(1.2);
     transition: all 0.3s ease;
     filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.8));
 }
@@ -255,36 +237,17 @@ select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF
     text-shadow: 
         0 0 25px rgba(255, 165, 0, 0.8),
         0 0 50px rgba(255, 165, 0, 0.5);
-    transform: scale(1.2) rotate(3deg);
+    transform: scale(1.1);
 }
 
 .star-rating input[type="radio"]:checked ~ .star { 
     color: #FFD700;
     text-shadow: 
         0 0 25px rgba(255, 215, 0, 0.9),
-        0 0 50px rgba(255, 215, 0, 0.6),
-        0 0 75px rgba(255, 215, 0, 0.3);
-    transform: scale(1.2);
+        0 0 50px rgba(255, 215, 0, 0.6);
+    transform: scale(1.1);
     transition: all 0.3s ease;
     filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
-    animation: starGlow 2s ease-in-out infinite;
-}
-
-@keyframes starGlow {
-    0%, 100% { 
-        text-shadow: 
-            0 0 25px rgba(255, 215, 0, 0.9),
-            0 0 50px rgba(255, 215, 0, 0.6),
-            0 0 75px rgba(255, 215, 0, 0.3);
-        filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.9));
-    }
-    50% { 
-        text-shadow: 
-            0 0 35px rgba(255, 215, 0, 1),
-            0 0 70px rgba(255, 215, 0, 0.8),
-            0 0 100px rgba(255, 215, 0, 0.5);
-        filter: drop-shadow(0 0 30px rgba(255, 215, 0, 1));
-    }
 }
 
 @keyframes starPulse {

@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
         5: 'ممتاز'
     };
 
-    // Star rating interaction
+    // Star rating interaction - simplified system
     const starRating = document.getElementById('star-rating');
     const stars = starRating.querySelectorAll('.star');
     
@@ -26,11 +26,13 @@ document.addEventListener('DOMContentLoaded', () => {
         star.addEventListener('mouseenter', function() {
             const rating = parseFloat(this.dataset.rating);
             updateStarDisplay(rating);
+            highlightStars(rating);
         });
         
         star.addEventListener('click', function() {
             const rating = parseFloat(this.dataset.rating);
             updateStarDisplay(rating);
+            highlightStars(rating);
             // Trigger the radio button
             const radio = document.getElementById(`star-${rating}`);
             radio.checked = true;
@@ -42,10 +44,35 @@ document.addEventListener('DOMContentLoaded', () => {
         if (checkedRadio) {
             const rating = parseFloat(checkedRadio.value);
             updateStarDisplay(rating);
+            highlightStars(rating);
         } else {
             ratingDisplay.textContent = 'اختر تقييمك';
+            resetStars();
         }
     });
+    
+    function highlightStars(rating) {
+        stars.forEach(star => {
+            const starRating = parseFloat(star.dataset.rating);
+            if (starRating <= rating) {
+                star.style.color = '#FFD700';
+                star.style.textShadow = '0 0 20px rgba(255, 215, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.6)';
+                star.style.transform = 'scale(1.1)';
+            } else {
+                star.style.color = '#2D3748';
+                star.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.3)';
+                star.style.transform = 'scale(1)';
+            }
+        });
+    }
+    
+    function resetStars() {
+        stars.forEach(star => {
+            star.style.color = '#2D3748';
+            star.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.3)';
+            star.style.transform = 'scale(1)';
+        });
+    }
     
     function updateStarDisplay(rating) {
         ratingDisplay.textContent = `${rating} نجوم - ${ratingTexts[rating]}`;
