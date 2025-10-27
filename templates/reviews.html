@@ -71,18 +71,38 @@
                 <option value="">-- جاري تحميل المقررات --</option>
             </select>
             <label>تقييمك بالنجوم:</label>
-            <div class="star-rating">
-                <input type="radio" id="5-stars" name="rating" value="5" hidden /><label for="5-stars" class="star full">&#9733;</label>
-                <input type="radio" id="4.5-stars" name="rating" value="4.5" hidden /><label for="4.5-stars" class="star half">&#9733;</label>
-                <input type="radio" id="4-stars" name="rating" value="4" hidden /><label for="4-stars" class="star full">&#9733;</label>
-                <input type="radio" id="3.5-stars" name="rating" value="3.5" hidden /><label for="3.5-stars" class="star half">&#9733;</label>
-                <input type="radio" id="3-stars" name="rating" value="3" hidden /><label for="3-stars" class="star full">&#9733;</label>
-                <input type="radio" id="2.5-stars" name="rating" value="2.5" hidden /><label for="2.5-stars" class="star half">&#9733;</label>
-                <input type="radio" id="2-stars" name="rating" value="2" hidden /><label for="2-stars" class="star full">&#9733;</label>
-                <input type="radio" id="1.5-stars" name="rating" value="1.5" hidden /><label for="1.5-stars" class="star half">&#9733;</label>
-                <input type="radio" id="1-star" name="rating" value="1" hidden /><label for="1-star" class="star full">&#9733;</label>
-                <input type="radio" id="0.5-stars" name="rating" value="0.5" hidden /><label for="0.5-stars" class="star half">&#9733;</label>
+            <div class="star-rating" id="star-rating">
+                <input type="radio" id="star-5" name="rating" value="5" hidden />
+                <label for="star-5" class="star" data-rating="5">★</label>
+                
+                <input type="radio" id="star-4.5" name="rating" value="4.5" hidden />
+                <label for="star-4.5" class="star half" data-rating="4.5">★</label>
+                
+                <input type="radio" id="star-4" name="rating" value="4" hidden />
+                <label for="star-4" class="star" data-rating="4">★</label>
+                
+                <input type="radio" id="star-3.5" name="rating" value="3.5" hidden />
+                <label for="star-3.5" class="star half" data-rating="3.5">★</label>
+                
+                <input type="radio" id="star-3" name="rating" value="3" hidden />
+                <label for="star-3" class="star" data-rating="3">★</label>
+                
+                <input type="radio" id="star-2.5" name="rating" value="2.5" hidden />
+                <label for="star-2.5" class="star half" data-rating="2.5">★</label>
+                
+                <input type="radio" id="star-2" name="rating" value="2" hidden />
+                <label for="star-2" class="star" data-rating="2">★</label>
+                
+                <input type="radio" id="star-1.5" name="rating" value="1.5" hidden />
+                <label for="star-1.5" class="star half" data-rating="1.5">★</label>
+                
+                <input type="radio" id="star-1" name="rating" value="1" hidden />
+                <label for="star-1" class="star" data-rating="1">★</label>
+                
+                <input type="radio" id="star-0.5" name="rating" value="0.5" hidden />
+                <label for="star-0.5" class="star half" data-rating="0.5">★</label>
             </div>
+            <div class="rating-display" id="rating-display">اختر تقييمك</div>
             <label for="reviewText">ملاحظاتك:</label>
             <textarea id="reviewText" name="reviewText" required placeholder="اشرح لماذا قمت بهذا التقييم..."></textarea>
             <button type="submit">إرسال التقييم</button>
@@ -96,7 +116,7 @@
         <div style="position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: radial-gradient(circle at top, rgba(212, 175, 55, 0.1), transparent 50%); pointer-events: none;"></div>
         <div style="max-width: 1200px; margin: 0 auto; text-align: center; position: relative; z-index: 1;">
             <div style="margin-bottom: 3rem;">
-                <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);">مشروع تخرج - نظام تقييم المقررات الدراسية</h3>
+                <h3 style="color: #D4AF37; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 700; text-shadow: 0 0 20px rgba(212, 175, 55, 0.5);">مشروع تخرج - الحوسبة السحابية</h3>
                 <p style="color: #e2e8f0; font-size: 1.2rem; margin-bottom: 2rem; font-weight: 500;">الكلية التطبيقية - جامعة القصيم</p>
             </div>
             <div style="display: flex; justify-content: center; gap: 3rem; flex-wrap: wrap; margin-bottom: 3rem;">
@@ -104,13 +124,13 @@
                     <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent); opacity: 0; transition: opacity 0.5s;"></div>
                     <i class="fas fa-user-graduate" style="font-size: 2.5rem; color: #D4AF37; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.7));"></i>
                     <h4 style="color: #D4AF37; font-size: 1.4rem; margin: 1rem 0; font-weight: 700; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);">حسام الحسون</h4>
-                    <p style="color: #cbd5e1; margin: 0; font-size: 1rem; font-weight: 500;">مطور ومصمم النظام</p>
+                    <p style="color: #cbd5e1; margin: 0; font-size: 1rem; font-weight: 500;">الحوسبة السحابية</p>
                 </div>
                 <div style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0.05)); padding: 2rem 2.5rem; border-radius: 20px; min-width: 280px; backdrop-filter: blur(15px); border: 2px solid rgba(212, 175, 55, 0.4); transition: all 0.4s ease; position: relative; overflow: hidden;">
                     <div style="position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(212, 175, 55, 0.2), transparent); opacity: 0; transition: opacity 0.5s;"></div>
                     <i class="fas fa-user-graduate" style="font-size: 2.5rem; color: #D4AF37; margin-bottom: 1rem; filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.7));"></i>
                     <h4 style="color: #D4AF37; font-size: 1.4rem; margin: 1rem 0; font-weight: 700; text-shadow: 0 0 15px rgba(212, 175, 55, 0.5);">هيثم المرمش</h4>
-                    <p style="color: #cbd5e1; margin: 0; font-size: 1rem; font-weight: 500;">مطور ومصمم النظام</p>
+                    <p style="color: #cbd5e1; margin: 0; font-size: 1rem; font-weight: 500;">الحوسبة السحابية</p>
                 </div>
             </div>
             <div style="border-top: 2px solid rgba(212, 175, 55, 0.3); padding-top: 2rem;">

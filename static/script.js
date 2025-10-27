@@ -2,6 +2,56 @@ document.addEventListener('DOMContentLoaded', () => {
     const reviewsList = document.getElementById('reviews-list');
     const reviewForm = document.getElementById('review-form');
     const courseSelect = document.getElementById('courseName');
+    const ratingDisplay = document.getElementById('rating-display');
+
+    // Rating texts mapping
+    const ratingTexts = {
+        0.5: 'ضعيف جداً',
+        1: 'ضعيف جداً',
+        1.5: 'ضعيف',
+        2: 'ضعيف', 
+        2.5: 'مقبول',
+        3: 'متوسط',
+        3.5: 'جيد',
+        4: 'جيد',
+        4.5: 'جيد جداً',
+        5: 'ممتاز'
+    };
+
+    // Star rating interaction
+    const starRating = document.getElementById('star-rating');
+    const stars = starRating.querySelectorAll('.star');
+    
+    stars.forEach(star => {
+        star.addEventListener('mouseenter', function() {
+            const rating = parseFloat(this.dataset.rating);
+            updateStarDisplay(rating);
+        });
+        
+        star.addEventListener('click', function() {
+            const rating = parseFloat(this.dataset.rating);
+            updateStarDisplay(rating);
+            // Trigger the radio button
+            const radio = document.getElementById(`star-${rating}`);
+            radio.checked = true;
+        });
+    });
+    
+    starRating.addEventListener('mouseleave', function() {
+        const checkedRadio = starRating.querySelector('input[type="radio"]:checked');
+        if (checkedRadio) {
+            const rating = parseFloat(checkedRadio.value);
+            updateStarDisplay(rating);
+        } else {
+            ratingDisplay.textContent = 'اختر تقييمك';
+        }
+    });
+    
+    function updateStarDisplay(rating) {
+        ratingDisplay.textContent = `${rating} نجوم - ${ratingTexts[rating]}`;
+        ratingDisplay.style.color = '#FFD700';
+        ratingDisplay.style.textShadow = '0 0 15px rgba(255, 215, 0, 0.8)';
+    }
 
     async function fetchCourses() {
         try {
@@ -33,19 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 stars += `<i class="fa fa-star"></i>`;
             }
         }
-        
-        const ratingTexts = {
-            0.5: 'ضعيف جداً',
-            1: 'ضعيف جداً',
-            1.5: 'ضعيف',
-            2: 'ضعيف', 
-            2.5: 'مقبول',
-            3: 'متوسط',
-            3.5: 'جيد',
-            4: 'جيد',
-            4.5: 'جيد جداً',
-            5: 'ممتاز'
-        };
         
         return `<div class="review-stars">${stars}</div><div class="rating-text">${ratingTexts[rating] || rating + ' نجوم'}</div>`;
     }
@@ -103,6 +140,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 body: JSON.stringify(newReview)
             });
             reviewForm.reset();
+            ratingDisplay.textContent = 'اختر تقييمك';
+            ratingDisplay.style.color = '#D4AF37';
+            ratingDisplay.style.textShadow = '0 0 10px rgba(212, 175, 55, 0.5)';
             fetchReviews();
 
             const successMsg = document.getElementById('success-message');
@@ -123,8 +163,8 @@ document.addEventListener('DOMContentLoaded', () => {
     style.innerHTML = `
         .review-stars .fa-star.checked,
         .review-stars .fa-star-half-alt.checked { 
-            color: #f59e0b; 
-            text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+            color: #FFD700; 
+            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
         }
     `;
     document.head.appendChild(style);
@@ -162,27 +202,6 @@ document.addEventListener('DOMContentLoaded', () => {
             element.textContent = Math.floor(current);
         }, 16);
     }
-
-    const starRating = document.querySelector('.star-rating');
-    const ratingTexts = {
-        0.5: 'ضعيف جداً',
-        1: 'ضعيف جداً',
-        1.5: 'ضعيف',
-        2: 'ضعيف',
-        2.5: 'مقبول',
-        3: 'متوسط',
-        3.5: 'جيد',
-        4: 'جيد',
-        4.5: 'جيد جداً',
-        5: 'ممتاز'
-    };
-
-    document.querySelectorAll('.star-rating input[type="radio"]').forEach(input => {
-        input.addEventListener('change', function() {
-            const rating = parseFloat(this.value);
-            starRating.setAttribute('data-rating-text', ratingTexts[rating] || rating + ' نجوم');
-        });
-    });
 
     fetchCourses();
     fetchReviews();
