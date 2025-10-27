@@ -4,17 +4,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const courseSelect = document.getElementById('courseName');
     const ratingDisplay = document.getElementById('rating-display');
 
-    // Rating texts mapping
+    // Rating texts mapping - simplified for 5 stars only
     const ratingTexts = {
-        0.5: 'ضعيف جداً',
-        1: 'ضعيف جداً',
-        1.5: 'ضعيف',
-        2: 'ضعيف', 
-        2.5: 'مقبول',
+        1: 'ضعيف',
+        2: 'مقبول', 
         3: 'متوسط',
-        3.5: 'جيد',
         4: 'جيد',
-        4.5: 'جيد جداً',
         5: 'ممتاز'
     };
 
@@ -98,14 +93,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function renderStars(rating) {
         let stars = '';
-        const fullStars = Math.floor(rating);
-        const hasHalfStar = rating % 1 !== 0;
         
         for (let i = 1; i <= 5; i++) {
-            if (i <= fullStars) {
+            if (i <= rating) {
                 stars += `<i class="fa fa-star checked"></i>`;
-            } else if (i === fullStars + 1 && hasHalfStar) {
-                stars += `<i class="fa fa-star-half-alt checked"></i>`;
             } else {
                 stars += `<i class="fa fa-star"></i>`;
             }
