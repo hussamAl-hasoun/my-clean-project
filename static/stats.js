@@ -1,20 +1,28 @@
 const style = document.createElement('style');
 style.innerHTML = `
     .review-stars .fa-star.checked { 
-        color: #f59e0b; 
-        text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);
+        color: #FBBF24; 
+        text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
     }
 `;
 document.head.appendChild(style);
 
 document.addEventListener('DOMContentLoaded', async () => {
-        try {
+    try {
         const response = await fetch('/api/reviews');
+        if (!response.ok) {
+            throw new Error('فشل في جلب البيانات');
+        }
         const reviews = await response.json();
         
-        if (reviews.length === 0) {
+        if (!reviews || reviews.length === 0) {
             document.getElementById('courseTableBody').innerHTML = 
-                '<tr><td colspan="4" style="text-align: center; padding: 2rem;">لا توجد تقييمات متاحة حالياً</td></tr>';
+                '<tr><td colspan="4" style="text-align: center; padding: 2rem; color: #cbd5e1;"><i class="fas fa-inbox" style="font-size: 3rem; margin-bottom: 1rem; color: #FBBF24; opacity: 0.5; display: block;"></i>لا توجد تقييمات متاحة حالياً</td></tr>';
+            // Reset all stats
+            document.getElementById('overall-avg').textContent = '0.0';
+            document.getElementById('total-reviews-stat').textContent = '0';
+            document.getElementById('rated-courses').textContent = '0';
+            document.getElementById('top-course').textContent = '--';
             return;
         }
         const courseStats = {};
@@ -181,6 +189,15 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     } catch (error) {
         console.error('Error loading statistics:', error);
+        // Show user-friendly error message
+        const errorMsg = document.createElement('div');
+        errorMsg.style.cssText = 'text-align: center; padding: 3rem; color: #ef4444;';
+        errorMsg.innerHTML = `
+            <i class="fas fa-exclamation-triangle" style="font-size: 4rem; margin-bottom: 1rem; display: block;"></i>
+            <p style="font-size: 1.2rem; margin-bottom: 1rem;">حدث خطأ أثناء تحميل الإحصائيات</p>
+            <button onclick="location.reload()" style="padding: 0.8rem 2rem; background: #FBBF24; color: #1e293b; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">تحديث الصفحة</button>
+        `;
+        document.querySelector('.container')?.appendChild(errorMsg);
         document.getElementById('courseTableBody').innerHTML = 
             '<tr><td colspan="4" style="text-align: center; color: #ef4444;">حدث خطأ أثناء تحميل الإحصائيات</td></tr>';
     }
@@ -192,10 +209,10 @@ function renderStars(rating) {
     const hasHalf = rating % 1 >= 0.5;
     
     for (let i = 0; i < fullStars; i++) {
-        stars += '<i class="fas fa-star" style="color: #f59e0b; text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);"></i> ';
+        stars += '<i class="fas fa-star" style="color: #FBBF24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);"></i> ';
     }
     if (hasHalf) {
-        stars += '<i class="fas fa-star-half-alt" style="color: #f59e0b; text-shadow: 0 0 8px rgba(245, 158, 11, 0.6);"></i> ';
+        stars += '<i class="fas fa-star-half-alt" style="color: #FBBF24; text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);"></i> ';
     }
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {

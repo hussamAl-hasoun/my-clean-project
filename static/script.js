@@ -50,11 +50,11 @@ document.addEventListener('DOMContentLoaded', () => {
         stars.forEach(star => {
             const starRating = parseFloat(star.dataset.rating);
             if (starRating <= rating) {
-                star.style.color = '#FFD700';
-                star.style.textShadow = '0 0 20px rgba(255, 215, 0, 0.9), 0 0 40px rgba(255, 215, 0, 0.6)';
+                star.style.color = '#FBBF24';
+                star.style.textShadow = '0 0 20px rgba(251, 191, 36, 0.9), 0 0 40px rgba(251, 191, 36, 0.6)';
                 star.style.transform = 'scale(1.1)';
             } else {
-                star.style.color = '#2D3748';
+                star.style.color = '#475569';
                 star.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.3)';
                 star.style.transform = 'scale(1)';
             }
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function resetStars() {
         stars.forEach(star => {
-            star.style.color = '#2D3748';
+            star.style.color = '#475569';
             star.style.textShadow = '0 0 10px rgba(0, 0, 0, 0.3)';
             star.style.transform = 'scale(1)';
         });
@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
     function updateStarDisplay(rating) {
         ratingDisplay.textContent = `${rating} نجوم - ${ratingTexts[rating]}`;
-        ratingDisplay.style.color = '#FFD700';
-        ratingDisplay.style.textShadow = '0 0 15px rgba(255, 215, 0, 0.8)';
+        ratingDisplay.style.color = '#FBBF24';
+        ratingDisplay.style.textShadow = '0 0 15px rgba(251, 191, 36, 0.8)';
     }
 
     async function fetchCourses() {
@@ -112,7 +112,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const reviews = await response.json();
             reviewsList.innerHTML = '';
             if (reviews.length === 0) {
-                reviewsList.innerHTML = '<p>لا توجد تقييمات حاليًا. كن أول من يضيف تقييمًا!</p>';
+                reviewsList.innerHTML = '<div style="text-align: center; padding: 3rem; color: #cbd5e1;"><i class="fas fa-inbox" style="font-size: 4rem; margin-bottom: 1rem; color: #FBBF24; opacity: 0.5;"></i><p style="font-size: 1.2rem;">لا توجد تقييمات حاليًا.<br>كن أول من يضيف تقييمًا!</p></div>';
                 return;
             }
             reviews.forEach(review => {
@@ -128,7 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
             updateStatistics();
         } catch (error) {
-            reviewsList.innerHTML = '<p>حدث خطأ أثناء تحميل التقييمات. الرجاء المحاولة مرة أخرى.</p>';
+            reviewsList.innerHTML = '<div style="text-align: center; padding: 3rem; color: #ef4444;"><i class="fas fa-exclamation-triangle" style="font-size: 4rem; margin-bottom: 1rem;"></i><p style="font-size: 1.2rem;">حدث خطأ أثناء تحميل التقييمات.<br>الرجاء تحديث الصفحة والمحاولة مرة أخرى.</p><button onclick="location.reload()" style="margin-top: 1rem; padding: 0.8rem 2rem; background: #FBBF24; color: #1e293b; border: none; border-radius: 8px; font-weight: 600; cursor: pointer;">تحديث الصفحة</button></div>';
+            console.error('Error fetching reviews:', error);
         }
     }
 
@@ -136,53 +137,135 @@ document.addEventListener('DOMContentLoaded', () => {
         event.preventDefault();
         const ratingElement = document.querySelector('input[name="rating"]:checked');
         if (!ratingElement) {
-            alert('الرجاء اختيار تقييم بالنجوم.');
+            showError('الرجاء اختيار تقييم بالنجوم.');
             return;
         }
         
         const newReview = {
-            studentName: document.getElementById('studentName').value,
-            courseName: document.getElementById('courseName').value,
+            studentName: document.getElementById('studentName').value.trim(),
+            courseName: document.getElementById('courseName').value.trim(),
             rating: parseFloat(ratingElement.value),
-            reviewText: document.getElementById('reviewText').value
+            reviewText: document.getElementById('reviewText').value.trim()
         };
+
+        // Client-side validation
+        if (!newReview.studentName || newReview.studentName.length < 2) {
+            showError('اسم الطالب يجب أن يكون على الأقل حرفين');
+            return;
+        }
+        
+        if (!newReview.courseName) {
+            showError('الرجاء اختيار مقرر دراسي');
+            return;
+        }
+        
+        if (!newReview.reviewText || newReview.reviewText.length < 10) {
+            showError('نص التقييم يجب أن يكون على الأقل 10 أحرف');
+            return;
+        }
 
         const submitButton = reviewForm.querySelector('button');
         submitButton.disabled = true;
         submitButton.textContent = 'جاري الإرسال...';
+        submitButton.style.opacity = '0.7';
 
         try {
-            await fetch('/api/reviews', {
+            const response = await fetch('/api/reviews', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(newReview)
             });
+            
+            const result = await response.json();
+            
+            if (!response.ok) {
+                throw new Error(result.error || 'حدث خطأ أثناء إرسال التقييم');
+            }
+            
             reviewForm.reset();
             ratingDisplay.textContent = 'اختر تقييمك';
-            ratingDisplay.style.color = '#D4AF37';
-            ratingDisplay.style.textShadow = '0 0 10px rgba(212, 175, 55, 0.5)';
+            ratingDisplay.style.color = '#FBBF24';
+            ratingDisplay.style.textShadow = '0 0 10px rgba(251, 191, 36, 0.6)';
+            
+            // Reset stars
+            resetStars();
+            const checkedRadio = starRating.querySelector('input[type="radio"]:checked');
+            if (checkedRadio) checkedRadio.checked = false;
+            
             fetchReviews();
 
             const successMsg = document.getElementById('success-message');
             successMsg.style.display = 'block';
+            successMsg.style.animation = 'fadeInUp 0.5s ease';
             setTimeout(() => {
-                successMsg.style.display = 'none';
+                successMsg.style.animation = 'fadeOut 0.5s ease';
+                setTimeout(() => {
+                    successMsg.style.display = 'none';
+                }, 500);
             }, 3000);
 
         } catch (error) {
-            alert('حدث خطأ أثناء إرسال التقييم.');
+            showError(error.message || 'حدث خطأ أثناء إرسال التقييم. الرجاء المحاولة مرة أخرى.');
         } finally {
             submitButton.disabled = false;
             submitButton.textContent = 'إرسال التقييم';
+            submitButton.style.opacity = '1';
         }
     });
+    
+    function showError(message) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-popup';
+        errorDiv.textContent = message;
+        errorDiv.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #ef4444;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            font-weight: bold;
+            z-index: 200;
+            animation: fadeInUp 0.5s ease;
+        `;
+        document.body.appendChild(errorDiv);
+        setTimeout(() => {
+            errorDiv.style.animation = 'fadeOut 0.5s ease';
+            setTimeout(() => {
+                errorDiv.remove();
+            }, 500);
+        }, 4000);
+    }
 
     const style = document.createElement('style');
     style.innerHTML = `
         .review-stars .fa-star.checked,
         .review-stars .fa-star-half-alt.checked { 
-            color: #FFD700; 
-            text-shadow: 0 0 15px rgba(255, 215, 0, 0.8);
+            color: #FBBF24; 
+            text-shadow: 0 0 15px rgba(251, 191, 36, 0.8);
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-50%) translateY(-20px);
+            }
         }
     `;
     document.head.appendChild(style);
