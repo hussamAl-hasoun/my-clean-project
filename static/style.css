@@ -743,10 +743,34 @@ nav a.active {
     font-size: 1.3rem;
     margin-bottom: 1rem;
     font-weight: 600;
+    text-align: center;
+}
+
+.review-card p {
+    text-align: center;
+    line-height: 1.8;
+    margin: 1rem 0;
+}
+
+.review-card strong {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #FBBF24;
+}
+
+.review-card em {
+    display: block;
+    margin-top: 1rem;
+    color: #cbd5e1;
+    font-style: normal;
 }
 
 .review-stars {
     margin-bottom: 0.5rem;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    gap: 0.3rem;
 }
 
 .rating-text {
