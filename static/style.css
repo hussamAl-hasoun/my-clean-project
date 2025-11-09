@@ -456,13 +456,19 @@ nav a.active {
     max-width: 1200px;
     margin: 0 auto;
     padding: 0 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .hero-title {
     font-size: 4.5rem;
     font-weight: 900;
     color: #ffffff;
-    margin-bottom: 1.5rem;
+    margin: 0 auto 1.5rem auto;
+    text-align: center;
     text-shadow: 
         3px 3px 6px rgba(0, 0, 0, 0.6),
         0 0 40px rgba(251, 191, 36, 0.5),
@@ -470,6 +476,9 @@ nav a.active {
     animation: fadeInUp 1.2s ease-out, titleGlow 3s ease-in-out infinite;
     letter-spacing: -0.02em;
     line-height: 1.1;
+    display: block;
+    width: 100%;
+    direction: rtl;
 }
 
 @keyframes titleGlow {
@@ -490,13 +499,18 @@ nav a.active {
 .hero-subtitle {
     font-size: 1.6rem;
     color: #FBBF24;
-    margin-bottom: 3.5rem;
+    margin: 0 auto 3.5rem auto;
+    text-align: center;
     animation: fadeInUp 1.2s ease-out 0.3s both;
     font-weight: 600;
     line-height: 1.6;
     text-shadow: 
         2px 2px 4px rgba(0, 0, 0, 0.5),
         0 0 20px rgba(251, 191, 36, 0.6);
+    display: block;
+    width: 100%;
+    max-width: 900px;
+    direction: rtl;
 }
 
 .hero-stats {
@@ -552,9 +566,12 @@ nav a.active {
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
-    margin-bottom: 0.5rem;
+    margin: 0 auto 0.5rem auto;
+    text-align: center;
     text-shadow: 0 0 30px rgba(251, 191, 36, 0.6);
     animation: gradientText 3s ease infinite;
+    width: 100%;
+    direction: rtl;
 }
 
 @keyframes gradientText {
@@ -571,6 +588,10 @@ nav a.active {
     color: #cbd5e1;
     font-weight: 600;
     text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    display: block;
+    width: 100%;
+    direction: rtl;
 }
 
 /* --- NEW: Section Headers --- */
@@ -582,13 +603,17 @@ nav a.active {
 .section-header h1 {
     font-size: 3rem;
     color: #ffffff;
-    margin-bottom: 1.5rem;
+    margin: 0 auto 1.5rem auto;
+    text-align: center;
     position: relative;
     font-weight: 800;
     letter-spacing: -0.01em;
     text-shadow: 
         2px 2px 4px rgba(0, 0, 0, 0.3),
         0 0 20px rgba(139, 92, 246, 0.2);
+    display: block;
+    width: 100%;
+    direction: rtl;
 }
 
 .section-header h1::after {
@@ -607,9 +632,13 @@ nav a.active {
 .section-header h2 {
     font-size: 2.2rem;
     color: #ffffff;
-    margin-bottom: 1rem;
+    margin: 0 auto 1rem auto;
+    text-align: center;
     font-weight: 700;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    display: block;
+    width: 100%;
+    direction: rtl;
 }
 
 .section-header p {
@@ -619,6 +648,8 @@ nav a.active {
     margin: 0 auto;
     line-height: 1.7;
     font-weight: 400;
+    text-align: center;
+    direction: rtl;
 }
 
 /* --- NEW: Add Review Section --- */
