@@ -42,3 +42,10 @@ instance/
 *.tmp
 *.temp
 
+# Python
+venv/
+__pycache__/
+*.pyc
+
+# IDE files (like VSCode)
+.vscode/

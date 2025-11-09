@@ -48,7 +48,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         const overallAvg = (totalRatings / reviews.length).toFixed(1);
         document.getElementById('overall-avg').textContent = overallAvg;
         document.getElementById('total-reviews-stat').textContent = reviews.length;
-        document.getElementById('rated-courses').textContent = Object.keys(courseStats).length;
+        document.getElementById('rated-courses').textContent = Object.keys(courseStats).length;s
+        templates
+        .gitignore
+        Dockerfile
+        Jenkinsfile
+        README.md
+        app.py
+        requirements.txt
+        test_app.py
+        test_integration.py
 
         const sortedCourses = Object.values(courseStats).sort((a, b) => b.average - a.average);
         if (sortedCourses.length > 0) {
