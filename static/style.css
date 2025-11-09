@@ -137,20 +137,11 @@ header:hover {
     padding: 2rem 3rem;
     position: relative;
     z-index: 1;
+    text-align: center;
 }
 
 /* --- Review Cards (Improved) --- */
-.review-card {
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1.5rem;
-    transition: transform 0.2s ease-in-out;
-}
-
-.review-card:hover { transform: translateY(-5px); }
-.review-card h3 { margin-top: 0; color: #FBBF24; } /* Gold */
+/* Review cards are now defined in Enhanced Review Cards section below */
 
 /* --- Form & Star Rating (Improved) --- */
 input, select {
@@ -313,6 +304,8 @@ select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF
     height: 40px;
     animation: spin 1s linear infinite;
     margin: 2rem auto;
+    display: block;
+    text-align: center;
 }
 
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
@@ -330,6 +323,8 @@ select { appearance: none; background-image: url("data:image/svg+xml;charset=UTF
     box-shadow: 0 4px 15px rgba(0,0,0,0.3);
     font-weight: bold;
     z-index: 200;
+    text-align: center;
+    direction: rtl;
 }
 
 /* --- Simple Footer --- */
@@ -685,6 +680,8 @@ nav a.active {
     grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
     gap: 2rem;
     margin-bottom: 3rem;
+    text-align: center;
+    direction: rtl;
 }
 
 @media (max-width: 1024px) {
@@ -766,13 +763,16 @@ nav a.active {
     border: 2px solid rgba(71, 85, 105, 0.4);
     border-radius: 12px;
     padding: 2rem;
-    margin-bottom: 2rem;
+    margin: 0 auto 2rem auto;
     transition: all 0.3s ease;
     position: relative;
     overflow: hidden;
     box-shadow: 
         0 4px 15px rgba(0, 0, 0, 0.3),
         0 0 20px rgba(59, 130, 246, 0.15);
+    text-align: center;
+    direction: rtl;
+    width: 100%;
 }
 
 .review-card::before {
@@ -803,36 +803,43 @@ nav a.active {
 }
 
 .review-card h3 {
-    margin-top: 0;
+    margin: 0 auto 1rem auto;
     color: #FBBF24;
     font-size: 1.3rem;
-    margin-bottom: 1rem;
     font-weight: 600;
     text-align: center;
+    display: block;
+    width: 100%;
+    direction: rtl;
 }
 
 .review-card p {
     text-align: center;
     line-height: 1.8;
-    margin: 1rem 0;
+    margin: 1rem auto;
     direction: rtl;
+    display: block;
+    width: 100%;
+    max-width: 100%;
 }
 
 .review-card strong {
-    display: block;
-    margin-bottom: 0.5rem;
+    display: inline-block;
+    margin: 0 0.3rem 0.5rem 0.3rem;
     color: #FBBF24;
     text-align: center;
     direction: rtl;
+    font-weight: 700;
 }
 
 .review-card em {
     display: block;
-    margin-top: 1rem;
+    margin: 1rem auto 0 auto;
     color: #cbd5e1;
     font-style: normal;
     text-align: center;
     direction: rtl;
+    width: 100%;
 }
 
 .review-stars {
